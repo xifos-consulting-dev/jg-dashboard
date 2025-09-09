@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ChakraProvider, Text } from '@chakra-ui/react';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { system, GlobalStyles } from '@/styles';
 import { Home, Login } from '@/pages';
-import { App, Dashboard } from '@/layouts';
+import { Protected, Dashboard, Public } from '@/layouts';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -22,13 +22,19 @@ createRoot(root!).render(
         <GlobalStyles />
         {/* app routing architecture */}
         <Routes>
-          <Route path={'/'} element={<App />}>
-            <Route path={'login'} element={<Login />} />
-            <Route path={'/'} element={<Dashboard />}>
-              <Route path={'/'} element={<Home />} />
-            </Route>
+          <Route element={<Public />}>
+            <Route path={'/'} element={<Navigate to={'/login'} replace />} />
+            <Route path={'/login'} element={<Login />} />
             <Route path={'*'} element={<Text>404</Text>} />
           </Route>
+          <Route element={<Protected />}>
+            {/* <Route path={'/'} element={<Navigate to={'/app'} replace />} /> */}
+            <Route path={'/app'} element={<Dashboard />}>
+              <Route path={''} element={<Home />} />
+              <Route path={'*'} element={<Text>404</Text>} />
+            </Route>
+          </Route>
+          <Route path={'*'} element={<Text>404</Text>} />
         </Routes>
       </StrictMode>
     </ChakraProvider>

@@ -1,6 +1,8 @@
 import { TextInput } from '@/components';
-import { Center, Text } from '@chakra-ui/react';
+import { useCookies } from '@/hooks';
+import { Button, Center, Text } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 type LoginFormValues = {
   mail: string;
@@ -8,9 +10,20 @@ type LoginFormValues = {
 };
 
 export const LoginForm = () => {
-  const handleSubmit = (values: LoginFormValues) => {
-    console.log(values);
+  const { setCookie } = useCookies();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values: LoginFormValues) => {
+    console.log('Submitting:', values);
+
+    // Mock async login
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Set a mock auth token
+    setCookie('token', 'mock-token', 0.000694);
+    navigate('/app');
   };
+
   return (
     <Center
       w={'fit-content'}
@@ -22,29 +35,28 @@ export const LoginForm = () => {
       border={'gray.300'}
       borderWidth={'thin'}
       flexDirection={'column'}
-      justifyItems={'start'}
     >
       <Text fontSize={'2xl'} fontWeight={'bold'}>
         Login
       </Text>
-      <Formik<LoginFormValues>
-        initialValues={{
-          mail: '',
-          pass: '',
-        }}
-        onSubmit={handleSubmit}
-      >
-        <Form
-          style={{
-            width: '300px',
-            gap: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <TextInput name={'mail'} label={'Mail'} />
-          <TextInput name={'pass'} label={'Password'} />
-        </Form>
+
+      <Formik<LoginFormValues> initialValues={{ mail: '', pass: '' }} onSubmit={handleSubmit}>
+        {({ isSubmitting }) => (
+          <Form
+            style={{
+              width: '300px',
+              gap: '15px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <TextInput name={'mail'} label={'Mail'} />
+            <TextInput name={'pass'} label={'Password'} />
+            <Button type={'submit'} colorScheme={'blue'} loading={isSubmitting}>
+              Login
+            </Button>
+          </Form>
+        )}
       </Formik>
     </Center>
   );

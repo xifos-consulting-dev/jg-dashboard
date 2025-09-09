@@ -1,2 +1,3 @@
 export { Dashboard } from './dashboard/Dashboard';
-export { App } from './app/App';
+export { Protected } from './protected/Protected';
+export { Public } from './public/Public';
