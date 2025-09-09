@@ -11,15 +11,15 @@ export const Home = () => {
         <VStack gap={'20'}>
           <Text fontSize={'5xl'}>Welcome</Text>
           <HStack gap={'20'}>
-            <Button variant={'subtle'}>
+            <Button>
               Owners
               <PiAddressBook />
             </Button>
-            <Button variant={'subtle'}>
+            <Button>
               Rentals
               <PiHouse />
             </Button>
-            <Button variant={'subtle'}>
+            <Button>
               Reports
               <PiFiles />
             </Button>
