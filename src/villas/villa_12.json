@@ -1,0 +1,17 @@
+{
+  "id": "Casa_Eleganza",
+  "name": "Casa Eleganza",
+  "description": "Just a few minutes drive off the coastal highway and up into the tropical rainforest, you'll find Casa Eleganza. Offering panoramic views, 180-degrees of the Pacific Ocean, this vacation villa features elegant colonial style architecture and decor. Casa Eleganza’s living space encompasses more than 4,300-square feet, and can accommodate 10 guests in the 4 bedrooms and 2.5 bathroom villa.<br/><br/>The master bedroom has a king-size bed, a stand-alone claw-foot bathtub, large closets and a huge bathroom that features his and hers vanities. Two additional bedrooms are located upstairs, one with a king-size bed plus sofa-sleeper, and the other has a queen-size bed. Both have ceiling fans, A/C and beautiful views. The fourth bedroom has two twin beds.<br/><br/>Sun lovers will have plenty of locations to soak up the rays alongside the luxurious infinity pool, which is the largest infinity pool in this exclusive neighborhood, offering some of the most stunning views around. The pool deck has plenty of lounge chairs and next to the pool is a large veranda featuring a built-in BBQ, the ideal spot to enjoy some fresh locally-caught fish.",
+  "bedrooms": 4,
+  "baths": 2.5,
+  "sleeps": 10,
+  "banner": "https://jgcompanysolutions.com/assets/images/gallery02/73e94615.jpg?v=c52b51f7",
+  "externalLink": "https://bebeseleganza.com",
+  "images": [
+    "slideshow12-2903eb47.jpg",
+    "slideshow12-5e774b58.jpg",
+    "slideshow12-8e805c53.jpg",
+    "slideshow12-a604a952.jpg",
+    "slideshow12-f86fa1b4.jpg"
+  ]
+}
