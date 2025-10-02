@@ -46,9 +46,10 @@ const renderForm = () => {
       >
         <Form>
           <TextInput label={'Name'} name={'name'} />
-          {/* <TextInput label={'Name'} />
-          <TextInput label={'Name'} />
-          <TextInput label={'Name'} /> */}
+          <TextInput label={'Status'} name={'status'} />
+          <TextInput label={'Stances'} name={'stances'} />
+          <TextInput label={'Description'} name={'description'} />
+          <TextInput label={'Address'} name={'address'} />
         </Form>
       </Formik>
     </Stack>

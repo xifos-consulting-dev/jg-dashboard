@@ -26,9 +26,8 @@ import { PageWrapper, TextInput } from '@/components';
 import { Form, Formik } from 'formik';
 
 type Owner = {
-  id: string;
+  identification: string;
   name: string;
-  lastName: string;
   phone: string;
   email: string;
 };
@@ -40,6 +39,7 @@ export const Owners = () => {
   const fetchOwners = async () => {
     const response = await fetch('http://localhost:3000/api/owners/all');
     const data = await response.json();
+    console.log(data);
     setOwners(data);
   };
 
@@ -80,13 +80,16 @@ const CreateNewDrawer = ({
   onSave: (values: Owner) => void;
 }) => {
   const handleSave = async (values: Owner) => {
-    console.log(values);
-    // const response = await fetch('http://localhost:3000/api/owners', {
-    //   method: 'POST',
-    //   body: JSON.stringify(values),
-    // });
-    // const data = await response.json();
-    onSave(values);
+    const response = await fetch('http://localhost:3000/api/owners', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    console.log(data);
+    onSave(data);
   };
 
   return (
@@ -94,9 +97,8 @@ const CreateNewDrawer = ({
       <Formik
         onSubmit={handleSave}
         initialValues={{
-          id: '',
+          identification: '',
           name: '',
-          lastName: '',
           phone: '',
           email: '',
         }}
@@ -112,9 +114,8 @@ const CreateNewDrawer = ({
                 <Drawer.Body>
                   <Form>
                     <Stack>
-                      <TextInput label={'ID'} name={'id'} />
+                      <TextInput label={'ID'} name={'identification'} />
                       <TextInput label={'Name'} name={'name'} />
-                      <TextInput label={'Last Name'} name={'lastName'} />
                       <TextInput label={'Phone'} name={'phone'} />
                       <TextInput label={'Email'} name={'email'} />
                     </Stack>
@@ -141,7 +142,7 @@ const CreateNewDrawer = ({
 };
 
 const RentalsTable = ({ owners }: { owners: Owner[] }) => {
-  const headers = ['ID', 'Name', 'Last Name', 'Phone', 'Email'];
+  const headers = ['ID', 'Name', 'Phone', 'Email'];
   return (
     <Stack alignItems={'end'}>
       <Table.Root variant={'outline'} rounded={'xl'} mt={'10'}>
@@ -158,7 +159,7 @@ const RentalsTable = ({ owners }: { owners: Owner[] }) => {
           <For each={owners}>
             {(owner, index) => (
               <Table.Row key={index}>
-                <For each={Object.values(owner)}>
+                <For each={[owner.identification, owner.name, owner.phone, owner.email]}>
                   {(value, index) => <Table.Cell key={index}>{value}</Table.Cell>}
                 </For>
                 <Table.Cell />

@@ -16,7 +16,13 @@ export const TextInput = (props: TextInputType) => {
       <ChakraField.Label fontWeight={'bold'} fontFamily={'body'}>
         {label}
       </ChakraField.Label>
-      <Input {...props} {...field} w={'full'} borderWidth={'thin'} borderColor={'gray.300'} />
+      <Input
+        {...props}
+        {...field}
+        w={'full'}
+        borderWidth={'thin'}
+        borderColor={error ? 'red.500' : 'gray.300'}
+      />
       {error && touched && (
         <Text fontSize={'md'} color={'red.500'}>
           {error}
