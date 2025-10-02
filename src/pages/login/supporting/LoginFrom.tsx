@@ -20,7 +20,7 @@ export const LoginForm = () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Set a mock auth token
-    setCookie('token', 'mock-token', 0.000694);
+    setCookie('token', 'mock-token', 1);
     navigate('/app');
   };
 

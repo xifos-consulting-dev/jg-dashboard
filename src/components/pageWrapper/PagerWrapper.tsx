@@ -59,7 +59,7 @@ export const PageWrapper: React.FC<PageWrapperProps> = ({ children, full }) => {
     <Center
       ref={ref}
       w={'full'}
-      h={full ? '100dvh' : 'auto'}
+      h={full ? 'calc(100dvh - 100px)' : 'auto'}
       flex={'1'}
       overflow={'hidden'}
       flexDir={'column'}

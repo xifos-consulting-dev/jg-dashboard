@@ -1,4 +1,5 @@
 import { Button, Center, HStack } from '@chakra-ui/react';
+import { PiAddressBook, PiFiles, PiHouse } from 'react-icons/pi';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import logo from '../../assets/logo.jpg';
 
@@ -7,25 +8,25 @@ export const Navbar = () => {
   const location = useLocation();
 
   const renderNabarButtons = () => {
-    return views.map((view, index) => {
-      const isActive = location.pathname === `/${view.path}`;
+    return buttons.map(({ name, path, Icon }, index) => {
+      const isActive = location.pathname === `${path}`;
       return (
         <Button
           key={index}
           colorPalette={isActive ? 'green' : 'black'}
           size={{ base: 'md', md: '2xl' }}
           variant={'plain'}
-          onClick={() => navigate(view.path)}
+          onClick={() => navigate(path)}
         >
-          {view.name}
+          {name}
+          <Icon />
         </Button>
       );
     });
   };
   return (
     <>
-      <Center w={'full'}>{/* <Image h={'200px'} src={logo} alt={'Logo'} /> */}</Center>
-      <HStack bgColor={'white'} w={'full'} position={'sticky'} top={'0'} zIndex={'sticky'}>
+      <HStack bgColor={'white'} w={'full'} h={'100px'}>
         <Center w={'full'} gap={{ base: '5', md: '10' }} px={10}>
           {renderNabarButtons()}
         </Center>
@@ -34,9 +35,8 @@ export const Navbar = () => {
   );
 };
 
-const views = [
-  { name: 'Home', path: '' },
-  { name: 'About', path: 'about' },
-  { name: 'Info', path: 'info' },
-  { name: 'Contact', path: 'contact' },
+const buttons = [
+  { name: 'Owners', path: '/app/owners', Icon: PiAddressBook },
+  { name: 'Rentals', path: '/app/rentals', Icon: PiHouse },
+  { name: 'Reports', path: '/app/reports', Icon: PiFiles },
 ];
