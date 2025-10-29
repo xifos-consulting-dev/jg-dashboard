@@ -1,7 +1,7 @@
 import { TextInput } from '@/components';
 import { useCookies } from '@/hooks';
 import { Button, Center, Text } from '@chakra-ui/react';
-import { Form, Formik } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 type LoginFormValues = {
@@ -13,14 +13,27 @@ export const LoginForm = () => {
   const { setCookie } = useCookies();
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: LoginFormValues) => {
+  const handleSubmit = async (
+    values: LoginFormValues,
+    { setErrors }: FormikHelpers<LoginFormValues>
+  ) => {
     console.log('Submitting:', values);
 
-    // Mock async login
+    // Simulate async login
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Set a mock auth token
-    setCookie('token', 'mock-token', 0.000694);
+    // Fake validation
+    const errors: Partial<LoginFormValues> = {};
+    if (values.mail !== 'demo@mail.com') errors.mail = 'Invalid email';
+    if (values.pass !== 'password123') errors.pass = 'Incorrect password';
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
+
+    // Success: set mock token and navigate
+    setCookie('token', 'mock-token', 1);
     navigate('/app');
   };
 
@@ -51,7 +64,7 @@ export const LoginForm = () => {
             }}
           >
             <TextInput name={'mail'} label={'Mail'} />
-            <TextInput name={'pass'} label={'Password'} />
+            <TextInput name={'pass'} label={'Password'} type={'password'} />
             <Button type={'submit'} colorScheme={'blue'} loading={isSubmitting}>
               Login
             </Button>
