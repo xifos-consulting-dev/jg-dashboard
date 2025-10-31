@@ -71,7 +71,7 @@ export const LoginForm = () => {
             }}
           >
             <TextInput name={'mail'} label={'Mail'} />
-            <TextInput name={'pass'} label={'Password'} />
+            <TextInput name={'pass'} label={'Password'} type={'password'} />
             <Button type={'submit'} colorScheme={'blue'} loading={isSubmitting}>
               Login
             </Button>
