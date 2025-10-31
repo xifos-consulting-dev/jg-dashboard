@@ -3,25 +3,45 @@ import { useCookies } from '@/hooks';
 import { Button, Center, Text } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { getBackendClient } from '@/utills/backend/connectionHandler';
 
 type LoginFormValues = {
   mail: string;
   pass: string;
 };
+const client = getBackendClient();
+
+async function login(credentials: { email: string; password: string }) {
+  try {
+    const response = await client.post<{ token: string }>('/login', {
+      body: credentials,
+    });
+    console.log('Login response:', response);
+    if (!response.token) {
+      throw new Error('No token received from server');
+    }
+    return response.token;
+  } catch (error) {
+    console.error('Login request failed:', error);
+    throw error;
+  }
+}
 
 export const LoginForm = () => {
   const { setCookie } = useCookies();
   const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginFormValues) => {
-    console.log('Submitting:', values);
+    try {
+      const token = await login({ email: values.mail, password: values.pass });
+      console.log('Login successful, token:', token);
 
-    // Mock async login
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Set a mock auth token
-    setCookie('token', 'mock-token', 0.000694);
-    navigate('/app');
+      setCookie('   token', token);
+      navigate('/app');
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Login failed. Please check your credentials and try again.');
+    }
   };
 
   return (

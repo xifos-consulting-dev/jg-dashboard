@@ -2,7 +2,7 @@ import { PageWrapper } from '@/components';
 import { Center, Image, Stack } from '@chakra-ui/react';
 // import logoDark from '../../assets/logo-dark.svg';
 import logoLight from '../../assets/logo-light.svg';
-import { LoginForm } from './supporting/LoginFrom';
+import { LoginForm } from './supporting/LoginForm';
 
 export const Login = () => {
   return (
