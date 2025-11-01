@@ -1,40 +1,47 @@
 import { TextInput } from '@/components';
 import { useCookies } from '@/hooks';
 import { Button, Center, Text } from '@chakra-ui/react';
-import { Form, Formik, type FormikHelpers } from 'formik';
+import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { getBackendClient } from '@/utills/backend/connectionHandler';
 
 type LoginFormValues = {
   mail: string;
   pass: string;
 };
+const client = getBackendClient();
+
+async function login(credentials: { email: string; password: string }) {
+  try {
+    const response = await client.post<{ token: string }>('/login', {
+      body: credentials,
+    });
+    console.log('Login response:', response);
+    if (!response.token) {
+      throw new Error('No token received from server');
+    }
+    return response.token;
+  } catch (error) {
+    console.error('Login request failed:', error);
+    throw error;
+  }
+}
 
 export const LoginForm = () => {
   const { setCookie } = useCookies();
   const navigate = useNavigate();
 
-  const handleSubmit = async (
-    values: LoginFormValues,
-    { setErrors }: FormikHelpers<LoginFormValues>
-  ) => {
-    console.log('Submitting:', values);
+  const handleSubmit = async (values: LoginFormValues) => {
+    try {
+      const token = await login({ email: values.mail, password: values.pass });
+      console.log('Login successful, token:', token);
 
-    // Simulate async login
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Fake validation
-    const errors: Partial<LoginFormValues> = {};
-    if (values.mail !== 'demo@mail.com') errors.mail = 'Invalid email';
-    if (values.pass !== 'password123') errors.pass = 'Incorrect password';
-
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
+      setCookie('   token', token);
+      navigate('/app');
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Login failed. Please check your credentials and try again.');
     }
-
-    // Success: set mock token and navigate
-    setCookie('token', 'mock-token', 1);
-    navigate('/app');
   };
 
   return (
